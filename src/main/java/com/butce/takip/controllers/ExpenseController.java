@@ -1,0 +1,29 @@
+package com.butce.takip.controllers;
+
+import com.butce.takip.models.Expense;
+import com.butce.takip.services.ExpenseService;
+
+import jakarta.persistence.PostUpdate;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/expenses")
+@RequiredArgsConstructor
+public class ExpenseController {
+
+  private final ExpenseService expenseService;
+
+  @GetMapping("/{userId}")
+  public ResponseEntity<List<Expense>> getAllExpenses(@PathVariable Long userId) {
+    return ResponseEntity.ok(expenseService.getAllExpenses(userId));
+  }
+
+  @PostMapping("/{userId}")
+  public ResponseEntity<Expense> createExpense(@PathVariable Long userId, @RequestBody Expense expense) {
+    return ResponseEntity.ok(expenseService.createExpense(expense, userId));
+  }
+
+}

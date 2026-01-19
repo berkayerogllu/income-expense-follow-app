@@ -24,4 +24,21 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByUsername(username).orElse(null);
   }
 
+  @Override
+  public void deleteUser(Long id) {
+    userRepository.deleteById(id);
+  }
+
+  @Override
+  public User updateUser(Long id, User userDetails) {
+    User existingUser = userRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Kullanıcı Bulunamadı id " + id));
+
+    existingUser.setUsername(userDetails.getUsername());
+    existingUser.setEmail(userDetails.getEmail());
+    existingUser.setPassword(userDetails.getPassword());
+
+    return userRepository.save(existingUser);
+  }
+
 }
