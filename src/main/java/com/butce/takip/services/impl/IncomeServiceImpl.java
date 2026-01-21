@@ -29,4 +29,22 @@ public class IncomeServiceImpl implements IncomeService {
     return incomeRepository.save(income);
   }
 
+  @Override
+  public void deleteIncome(Long id) {
+    incomeRepository.deleteById(id);
+  }
+
+  @Override
+  public Income updateIncome(Long id, Income incomeDetails) {
+
+    Income existingIncome = incomeRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Gelir bulunamadı:" + id));
+
+    existingIncome.setDescription(incomeDetails.getDescription());
+    existingIncome.setAmount(incomeDetails.getAmount());
+    existingIncome.setDate(incomeDetails.getDate());
+
+    return incomeRepository.save(existingIncome);
+  }
+
 }
