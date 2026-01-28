@@ -7,6 +7,11 @@ import com.butce.takip.repositories.UserRepository;
 import com.butce.takip.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -47,5 +52,16 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     return expenseRepository.save(existingExpense);
 
+  }
+
+  @Override
+  public List<Expense> getExpensesByMonth(Long userId, String dateStr) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+    YearMonth yearMonth = YearMonth.parse(dateStr, formatter);
+
+    LocalDate startDate = yearMonth.atDay(1);
+    LocalDate endDate = yearMonth.atEndOfMonth();
+
+    return expenseRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
   }
 }
