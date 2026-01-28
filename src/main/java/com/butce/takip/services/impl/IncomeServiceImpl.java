@@ -2,11 +2,16 @@ package com.butce.takip.services.impl;
 
 import com.butce.takip.models.Income;
 import com.butce.takip.models.User;
+import com.butce.takip.repositories.ExpenseRepository;
 import com.butce.takip.repositories.IncomeRepository;
 import com.butce.takip.repositories.UserRepository;
 import com.butce.takip.services.IncomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -45,6 +50,17 @@ public class IncomeServiceImpl implements IncomeService {
     existingIncome.setDate(incomeDetails.getDate());
 
     return incomeRepository.save(existingIncome);
+  }
+
+  @Override
+  public List<Income> getIncomesByMonth(Long userId, String dateStr) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+    YearMonth yearMonth = YearMonth.parse(dateStr, formatter);
+
+    LocalDate startDate = yearMonth.atDay(1);
+    LocalDate endDate = yearMonth.atEndOfMonth();
+
+    return incomeRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
   }
 
 }

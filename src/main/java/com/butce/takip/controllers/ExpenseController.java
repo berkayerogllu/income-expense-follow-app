@@ -36,4 +36,11 @@ public class ExpenseController {
     return ResponseEntity.ok("Expense Silindi: " + id);
   }
 
+  @GetMapping("/{userId}/monthly")
+  public ResponseEntity<List<Expense>> getExpensesByMonth(
+      @PathVariable Long userId,
+      @RequestParam String date) {
+    return ResponseEntity.ok(expenseService.getExpensesByMonth(userId, date));
+  }
+
 }

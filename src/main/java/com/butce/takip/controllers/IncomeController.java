@@ -35,4 +35,9 @@ public class IncomeController {
     return ResponseEntity.ok("Income başarıyla silindi. ID: " + id);
   }
 
+  @GetMapping("/{userId}/monthly")
+  public ResponseEntity<List<Income>> getIncomesByMonth(@PathVariable Long userId, String date) {
+    return ResponseEntity.ok(incomeService.getIncomesByMonth(userId, date));
+  }
+
 }

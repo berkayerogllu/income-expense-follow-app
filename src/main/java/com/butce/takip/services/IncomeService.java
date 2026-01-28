@@ -13,4 +13,6 @@ public interface IncomeService {
   void deleteIncome(Long id);
 
   Income updateIncome(Long id, Income income);
+
+  List<Income> getIncomesByMonth(Long userId, String dateStr);
 }
