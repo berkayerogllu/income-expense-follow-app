@@ -8,4 +8,9 @@ public interface ExpenseService {
   List<Expense> getAllExpenses(Long userId);
 
   Expense createExpense(Expense expense, Long userId);
+
+  void deleteExpense(Long id);
+
+  Expense updateExpense(Long id, Expense expense);
+
 }

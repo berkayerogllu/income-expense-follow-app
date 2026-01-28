@@ -29,7 +29,7 @@ public class IncomeController {
     return ResponseEntity.ok(incomeService.updateIncome(id, income));
   }
 
-  @DeleteMapping
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteIncome(@PathVariable Long id) {
     incomeService.deleteIncome(id);
     return ResponseEntity.ok("Income başarıyla silindi. ID: " + id);
