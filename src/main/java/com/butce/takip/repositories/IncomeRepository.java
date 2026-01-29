@@ -14,4 +14,6 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
   List<Income> findByUserId(Long userId);
 
   List<Income> findByUserIdAndDateBetween(Long userId, LocalDate startDate, LocalDate endDate);
+
+  List<Income> findByUserIdAndDescriptionContainingIgnoreCase(Long userId, String keyword);
 }

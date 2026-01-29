@@ -64,4 +64,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     return expenseRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
   }
+
+  @Override
+  public List<Expense> searchExpenses(Long userId, String keyword) {
+    return expenseRepository.findByUserIdAndDescriptionContainingIgnoreCase(userId, keyword);
+  }
 }

@@ -15,4 +15,6 @@ public interface IncomeService {
   Income updateIncome(Long id, Income income);
 
   List<Income> getIncomesByMonth(Long userId, String dateStr);
+
+  List<Income> searchIncomes(Long userId, String keyword);
 }

@@ -43,4 +43,11 @@ public class ExpenseController {
     return ResponseEntity.ok(expenseService.getExpensesByMonth(userId, date));
   }
 
+  @GetMapping("/{userId}/search")
+  public ResponseEntity<List<Expense>> searchExpenses(
+      @PathVariable Long userId,
+      @RequestParam String keyword) {
+    return ResponseEntity.ok(expenseService.searchExpenses(userId, keyword));
+  }
+
 }
