@@ -40,4 +40,9 @@ public class IncomeController {
     return ResponseEntity.ok(incomeService.getIncomesByMonth(userId, date));
   }
 
+  @GetMapping("/{userId}/search")
+  public ResponseEntity<List<Income>> searchIncomes(@PathVariable Long userId, @RequestParam String keyword) {
+    return ResponseEntity.ok(incomeService.searchIncomes(userId, keyword));
+  }
+
 }

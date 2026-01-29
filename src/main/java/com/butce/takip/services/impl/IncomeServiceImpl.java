@@ -63,4 +63,9 @@ public class IncomeServiceImpl implements IncomeService {
     return incomeRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
   }
 
+  @Override
+  public List<Income> searchIncomes(Long userId, String keyword) {
+    return incomeRepository.findByUserIdAndDescriptionContainingIgnoreCase(userId, keyword);
+  }
+
 }
