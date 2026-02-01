@@ -4,4 +4,6 @@ import com.butce.takip.dtos.MonthlySummaryDto;
 
 public interface ReportService {
   MonthlySummaryDto getMonthlyReport(Long userId, String dateStr);
+
+  MonthlySummaryDto getMonthlyBalance(Long userId, String dateStr);
 }
