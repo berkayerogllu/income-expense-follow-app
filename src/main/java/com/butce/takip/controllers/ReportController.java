@@ -21,4 +21,12 @@ public class ReportController {
 
     return ResponseEntity.ok(reportService.getMonthlyReport(userId, date));
   }
+
+  @GetMapping("/balance/{userId}")
+  public ResponseEntity<MonthlySummaryDto> getMonthlyBalance(
+      @PathVariable Long userId,
+      @RequestParam String date) {
+
+    return ResponseEntity.ok(reportService.getMonthlyBalance(userId, date));
+  }
 }

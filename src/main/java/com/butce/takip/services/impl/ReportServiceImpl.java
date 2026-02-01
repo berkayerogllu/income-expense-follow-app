@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -44,4 +45,28 @@ public class ReportServiceImpl implements ReportService {
 
     return new MonthlySummaryDto(totalIncome, totalExpense, balance);
   }
+
+  @Override
+  public MonthlySummaryDto getMonthlyBalance(Long userId, String dateStr) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+    YearMonth yearMonth = YearMonth.parse(dateStr, formatter);
+
+    LocalDate startDate = yearMonth.atDay(1);
+    LocalDate endDate = yearMonth.atEndOfMonth();
+
+    List<Income> incomes = incomeRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
+    Double totalIncome = incomes.stream()
+        .mapToDouble(Income::getAmount)
+        .sum();
+
+    List<Expense> expenses = expenseRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
+    Double totalExpense = expenses.stream()
+        .mapToDouble(Expense::getAmount)
+        .sum();
+
+    Double balance = totalIncome - totalExpense;
+
+    return new MonthlySummaryDto(totalIncome, totalExpense, balance);
+  }
+
 }
