@@ -69,4 +69,9 @@ public class ExpenseServiceImpl implements ExpenseService {
   public List<Expense> searchExpenses(Long userId, String keyword) {
     return expenseRepository.findByUserIdAndDescriptionContainingIgnoreCase(userId, keyword);
   }
+
+  @Override
+  public List<Expense> getTopExpenses(Long userId) {
+    return expenseRepository.findTop5ByUserIdOrderByAmountDesc(userId);
+  }
 }

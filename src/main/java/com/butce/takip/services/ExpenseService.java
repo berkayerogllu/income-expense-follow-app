@@ -16,4 +16,6 @@ public interface ExpenseService {
   List<Expense> getExpensesByMonth(Long userId, String dateStr);
 
   List<Expense> searchExpenses(Long userId, String keyword);
+
+  List<Expense> getTopExpenses(Long userId);
 }
