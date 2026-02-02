@@ -50,4 +50,9 @@ public class ExpenseController {
     return ResponseEntity.ok(expenseService.searchExpenses(userId, keyword));
   }
 
+  @GetMapping("/{userId}/top5")
+  public ResponseEntity<List<Expense>> getTopExpenses(@PathVariable Long userId) {
+    return ResponseEntity.ok(expenseService.getTopExpenses(userId));
+  }
+
 }
