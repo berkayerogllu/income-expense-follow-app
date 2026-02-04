@@ -1,8 +1,12 @@
 package com.butce.takip.controllers;
 
 import com.butce.takip.dtos.MonthlySummaryDto;
+import com.butce.takip.dtos.TransactionDto;
 import com.butce.takip.services.ReportService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +32,10 @@ public class ReportController {
       @RequestParam String date) {
 
     return ResponseEntity.ok(reportService.getMonthlyBalance(userId, date));
+  }
+
+  @GetMapping("/history/{userId}")
+  public ResponseEntity<List<TransactionDto>> getHistory(@PathVariable Long userId) {
+    return ResponseEntity.ok(reportService.getHistory(userId));
   }
 }
