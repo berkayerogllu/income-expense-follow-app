@@ -1,6 +1,7 @@
 package com.butce.takip.services.impl;
 
 import com.butce.takip.dtos.MonthlySummaryDto;
+import com.butce.takip.dtos.TransactionDto;
 import com.butce.takip.models.Income;
 import com.butce.takip.models.Expense;
 import com.butce.takip.repositories.ExpenseRepository;
@@ -13,7 +14,10 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,6 +71,34 @@ public class ReportServiceImpl implements ReportService {
     Double balance = totalIncome - totalExpense;
 
     return new MonthlySummaryDto(totalIncome, totalExpense, balance);
+  }
+
+  @Override
+  public List<TransactionDto> getHistory(Long userId) {
+
+    List<Income> incomes = incomeRepository.findByUserId(userId);
+    List<TransactionDto> transactions = new ArrayList<>();
+
+    for (Income income : incomes) {
+      transactions.add(new TransactionDto(
+          "GELİR",
+          income.getDescription(),
+          income.getAmount(),
+          income.getDate()));
+    }
+
+    List<Expense> expenses = expenseRepository.findByUserId(userId);
+    for (Expense expense : expenses) {
+      transactions.add(new TransactionDto(
+          "GİDER",
+          expense.getDescription(),
+          expense.getAmount(),
+          expense.getDate()));
+    }
+
+    return transactions.stream()
+        .sorted(Comparator.comparing(TransactionDto::getDate).reversed())
+        .collect(Collectors.toList());
   }
 
 }
